@@ -1,0 +1,65 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-2" data-aos="fade-up">{{ track.name }}</h1>
+			<div class="row">
+				<div class="col-auto" data-aos="fade-up">
+					<a appNavigate [navigateURL]="'tracks'" role="button" class="link-light">
+						<p class="fs-4 m-0">Назад</p>
+					</a>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<p class="fs-4 m-0">/</p>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<a appNavigate [navigateURL]="'track_update'" [queryParams]="{id:track.id}" role="button"
+					   class="link-light">
+						<p class="fs-4 m-0">Обновить</p>
+					</a>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<p class="fs-4 m-0">/</p>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<a (click)="delete()" role="button" class="link-light">
+						<p class="fs-4 m-0">Удалить</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<div class="row text-center" data-aos="fade-up">
+		<div class="col-12 mb-3">
+			<img [src]="track.img" alt="img" class="object-fit-cover w-100 rounded shadow border" height="300px">
+		</div>
+		<div class="col-12 col-lg-6 mb-3">
+			<p class="fs-4 m-0">{{ 'Длина трассы: ' + track.length + ' км' }}</p>
+		</div>
+		<div class="col-12 col-lg-6 mb-3">
+			<p class="fs-4 m-0">{{ 'Адрес: ' + track.address }}</p>
+		</div>
+	</div>
+
+	<hr data-aos="fade-up">
+
+	<div class="row">
+		@for (i of track.races; track i.id) {
+			<div class="col-12 col-lg-4 mb-3" data-aos="fade-up">
+				<div class="card card-body">
+					<a appNavigate [navigateURL]="'race'" [queryParams]="{id:i.id}" role="button">
+						<img [src]="i.img" alt="img" class="object-fit-cover w-100 rounded shadow border mb-3"
+							 style="height: 200px">
+					</a>
+					<p class="fs-5 m-0 text-center">{{ i.name }}</p>
+					<p class="fs-5 m-0">{{ 'Дата: ' + i.date }}</p>
+				</div>
+			</div>
+		}
+	</div>
+
+</div>

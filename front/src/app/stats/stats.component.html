@@ -1,0 +1,133 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-5" data-aos="fade-up">Отчет</h1>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5 mb-4" data-aos="fade-up">
+	<div class="card shadow-sm border-0 mb-4">
+		<div class="card-body p-3">
+			<div class="row g-3 align-items-end">
+				<div class="col-md-4">
+					<label for="startDate" class="form-label mb-1">Дата начала</label>
+					<input type="date" id="startDate" class="form-control" [(ngModel)]="startDate" (change)="applyDateFilter()">
+				</div>
+				<div class="col-md-4">
+					<label for="endDate" class="form-label mb-1">Дата окончания</label>
+					<input type="date" id="endDate" class="form-control" [(ngModel)]="endDate" (change)="applyDateFilter()">
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-outline-secondary w-100" (click)="resetDateFilter()">
+						Сбросить фильтр
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row g-3">
+		<div class="col-md-4">
+			<div class="card shadow-sm border-0 h-100" style="background: linear-gradient(135deg, #2d5016 0%, #3a6b2b 100%);">
+				<div class="card-body text-white p-4">
+					<h3 class="mb-2" style="font-size: 2rem; font-weight: 700;">{{ formattedTotalIncome }}</h3>
+					<p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">Выручка</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card shadow-sm border-0 h-100" style="background: linear-gradient(135deg, #dc143c 0%, #e63950 100%);">
+				<div class="card-body text-white p-4">
+					<h3 class="mb-2" style="font-size: 2rem; font-weight: 700;">{{ totalTickets }}</h3>
+					<p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">Билеты (шт. продано)</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card shadow-sm border-0 h-100" style="background: linear-gradient(135deg, #ffa500 0%, #ffb733 100%);">
+				<div class="card-body text-white p-4">
+					<h3 class="mb-2" style="font-size: 2rem; font-weight: 700;">{{ formattedAverageCheck }}</h3>
+					<p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">Средний чек</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-stats-sales-current [startDate]="startDate" [endDate]="endDate"></app-stats-sales-current>
+
+<div class="container mt-5 mb-5" data-aos="fade-up">
+	<div class="row g-4">
+		<div class="col-md-6">
+			<app-stats-sales-ratio [races]="salesRatioData"></app-stats-sales-ratio>
+		</div>
+		<div class="col-md-6">
+			<app-stats-track [tracks]="topTracksData"></app-stats-track>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5 mb-5" data-aos="fade-up">
+	<div class="row g-4">
+		<div class="col-md-6">
+			<app-stats-race-ticket [races]="raceDistributionData"></app-stats-race-ticket>
+		</div>
+		<div class="col-md-6">
+			<div class="card shadow-sm border-0 h-100">
+				<div class="card-header bg-dark text-white py-3">
+					<h4 class="mb-0">Общая статистика по гонкам</h4>
+				</div>
+				<div class="card-body p-4">
+					<div class="d-grid gap-2 mb-4">
+						<button type="button" class="btn btn-outline-dark" (click)="exportToExcel()">
+							Экспортировать в Excel
+						</button>
+						<button type="button" class="btn btn-outline-dark" (click)="exportToPDF()">
+							Экспортировать в PDF
+						</button>
+					</div>
+
+					<div class="table-responsive">
+						<table id="excel" class="table table-hover table-striped align-middle mb-0">
+							<thead class="table-dark">
+								<tr>
+									<th scope="col" class="ps-3">Наименование</th>
+									<th scope="col" class="ps-2">Продано билетов</th>
+									<th scope="col" class="text-end pe-3">Выручка</th>
+								</tr>
+							</thead>
+							<tbody>
+								@for (i of overallStatsData; track i.id) {
+									<tr>
+										<th scope="row" class="ps-3 fw-normal">{{ i.name }}</th>
+										<td class="ps-2">{{ i.busy }}</td>
+										<td class="text-end pe-3 fw-bold text-success">{{ i.income }}</td>
+									</tr>
+								}
+								<tr class="table-secondary fw-bold">
+									<td class="ps-3">Итого</td>
+									<td class="ps-2">{{ totalTickets }}</td>
+									<td class="text-end pe-3 text-success">{{ totalIncome }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-stats-sales-forecast></app-stats-sales-forecast>
+
+<div class="container mt-5 mb-5" data-aos="fade-up">
+	<div class="d-grid gap-2">
+		<button type="button" class="btn btn-dark w-100" (click)="generateFullReport()">
+			Выгрузить полный отчет по всем статистикам
+		</button>
+		<a class="btn btn-dark w-100" [href]="powerBiReportUrl" download>
+			Сформировать отчет в Power BI
+		</a>
+	</div>
+</div>

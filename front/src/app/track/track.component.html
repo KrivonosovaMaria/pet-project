@@ -1,0 +1,41 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-2" data-aos="fade-up">ГОНОЧНЫЕ ТРАССЫ</h1>
+			<div *ngIf="role === 'ADMIN'" class="row">
+				<div class="col-auto" data-aos="fade-up">
+					<a appNavigate [navigateURL]="'track_add'" role="button" class="link-light">
+						<p class="fs-4 m-0">Добавить</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<div class="row mb-5" data-aos="fade-up">
+		<div class="col-12 col-lg mb-2">
+			<input type="text" name="name" class="form-control" placeholder="Наименование" [(ngModel)]="filterName">
+		</div>
+	</div>
+
+	<div class="row">
+		@for (i of tracksSorted; track i.id) {
+			<div class="col-12 col-lg-4 mb-3" data-aos="fade-up">
+				<div class="card card-body shadow">
+					<a appNavigate [navigateURL]="'track'" [queryParams]="{id:i.id}" role="button">
+						<img [src]="i.img" alt="img" class="object-fit-cover w-100 rounded shadow border mb-3"
+							 style="height: 200px">
+					</a>
+					<p class="fs-5 m-0 text-center">{{ i.name }}</p>
+					<p class="fs-6 m-0">{{'Адрес: ' + i.address}}</p>
+					<p class="fs-6 m-0">{{'Длина трассы: ' + i.length + ' км'}}</p>
+				</div>
+			</div>
+		}
+	</div>
+
+</div>

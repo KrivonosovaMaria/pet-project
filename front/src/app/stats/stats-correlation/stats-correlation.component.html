@@ -1,0 +1,44 @@
+<div class="container mt-5" data-aos="fade-up">
+
+	<button type="button" class="btn btn-dark w-100 mb-2" (click)="generatePDF()">
+		Сформировать отчет по корреляции продаж и отзывов
+	</button>
+
+	<div class="p-2" id="pdf">
+
+		<apx-chart
+			[series]="chartOptions.series"
+			[chart]="chartOptions.chart"
+			[dataLabels]="chartOptions.dataLabels"
+			[plotOptions]="chartOptions.plotOptions"
+			[yaxis]="chartOptions.yaxis"
+			[xaxis]="chartOptions.xaxis"
+			[legend]="chartOptions.legend"
+			[colors]="chartOptions.colors"
+			[grid]="chartOptions.grid"
+			[tooltip]="chartOptions.tooltip"
+		></apx-chart>
+
+		<table id="excel" class="table table-hover fs-5">
+			<thead>
+			<tr>
+				<th scope="col">Наименование</th>
+				<th scope="col">Продано билетов</th>
+				<th scope="col">Количество отзывов</th>
+			</tr>
+			</thead>
+			<tbody>
+				@for (race of races; track race.id) {
+					<tr>
+						<th scope="row">{{ race.name }}</th>
+						<td>{{ race.busy || 0 }}</td>
+						<td>{{ race.comments?.length || 0 }}</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+

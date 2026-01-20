@@ -1,0 +1,58 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-2" data-aos="fade-up">Добавить</h1>
+			<div class="row">
+				<div class="col-auto" data-aos="fade-up">
+					<a appNavigate [navigateURL]="'races'" role="button" class="link-light">
+						<p class="fs-4 m-0">Назад</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<form [formGroup]="raceFormGroup" (ngSubmit)="save()" class="row">
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Наименование мероприятия</p>
+			<input type="text" formControlName="name" class="form-control" minlength="1" maxlength="255">
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Афиша (фото)</p>
+			<input type="file" (change)="changeImg($event)" class="form-control" accept="image/*">
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Стоимость билета</p>
+			<input type="number" formControlName="price" class="form-control" min="0.01" step="0.01" max="1000000">
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Количество билетов</p>
+			<input type="number" formControlName="count" class="form-control" min="1" step="1" max="1000000">
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Гоночная трасса</p>
+			<select (change)="changeTrackId($event)" class="form-select">
+				<option disabled selected>Выберите трассу</option>
+				@for (i of tracks; track i.id) {
+					<option [value]="i.id" [label]="i.name"></option>
+				}
+			</select>
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Дата мероприятия</p>
+			<input type="date" formControlName="date" class="form-control">
+		</div>
+		<div class="col-12 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Описание</p>
+			<textarea formControlName="description" class="form-control" minlength="1" maxlength="5000"></textarea>
+		</div>
+		<div class="col-12" data-aos="fade-up">
+			<button type="submit" class="btn btn-dark w-100" [disabled]="!checkSubmit()">Добавить</button>
+		</div>
+	</form>
+
+</div>

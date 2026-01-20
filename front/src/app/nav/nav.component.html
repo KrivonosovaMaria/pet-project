@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+	<div class="container">
+		<a class="navbar-brand" href="/">TicketRace</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse row" id="navbarColor01">
+			<ul class="navbar-nav col d-flex justify-content-center">
+				<li class="nav-item"><a class="nav-link" appNavigate [navigateURL]="''" role="button">ГЛАВНАЯ</a></li>
+
+				<li class="nav-item"><a class="nav-link" appNavigate [navigateURL]="'races'" role="button">ГОНКИ</a></li>
+				<li class="nav-item"><a class="nav-link" appNavigate [navigateURL]="'tracks'" role="button">ГОНОЧНЫЕ ТРАССЫ</a></li>
+
+				<li *ngIf="role === 'USER'" class="nav-item">
+					<a class="nav-link" appNavigate [navigateURL]="'tickets'" role="button">ЛИЧНЫЙ КАБИНЕТ</a>
+				</li>
+				<li *ngIf="role === 'USER'" class="nav-item">
+					<a class="nav-link" appNavigate [navigateURL]="'notifications'" role="button">УВЕДОМЛЕНИЯ</a>
+				</li>
+
+				<li *ngIf="role === 'ADMIN'" class="nav-item">
+					<a class="nav-link" appNavigate [navigateURL]="'users'" role="button">ПОЛЬЗОВАТЕЛИ</a>
+				</li>
+				<li *ngIf="role === 'ADMIN'" class="nav-item">
+					<a class="nav-link" appNavigate [navigateURL]="'tickets'" role="button">БИЛЕТЫ</a>
+				</li>
+				<li *ngIf="role === 'ADMIN'" class="nav-item">
+					<a class="nav-link" appNavigate [navigateURL]="'stats'" role="button">ОТЧЕТ</a>
+				</li>
+
+			</ul>
+			<ul class="navbar-nav col-auto">
+				<a *ngIf="role !== 'NOT'" (click)="logout()" role="button" class="btn btn-secondary mx-2">ВЫХОД</a>
+
+				<a *ngIf="role === 'NOT'" appNavigate [navigateURL]="'login'" role="button" class="btn btn-secondary mx-2">ВХОД</a>
+				<a *ngIf="role === 'NOT'" appNavigate [navigateURL]="'reg'" role="button" class="btn btn-secondary mx-2">РЕГИСТРАЦИЯ</a>
+			</ul>
+		</div>
+	</div>
+</nav>

@@ -1,0 +1,26 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-5" data-aos="fade-up">УВЕДОМЛЕНИЯ</h1>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<div class="row">
+		@for (i of notifications; track i.id) {
+			<div class="col-12 col-lg-4 mb-3" data-aos="fade-up">
+				<div class="card card-body">
+					<a appNavigate [navigateURL]="'race'" [queryParams]="{id:i.raceId}" role="button" class="link-primary">
+						<p class="fs-5 m-0 text-center">{{ i.raceName }}</p>
+					</a>
+					<p class="fs-5 m-0">{{ 'Дата: ' + i.date }}</p>
+					<p class="fs-5 m-0">{{ i.text }}</p>
+				</div>
+			</div>
+		}
+	</div>
+
+</div>

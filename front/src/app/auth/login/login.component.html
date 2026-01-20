@@ -1,0 +1,21 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-5" data-aos="fade-up">ВХОД</h1>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<div class="d-flex justify-content-center">
+		<form (ngSubmit)="loginFormSubmit()" [formGroup]="loginForm" class="w-50" data-aos="fade-up">
+			<input type="text" formControlName="username" class="form-control mb-2" required placeholder="Логин">
+			<input type="password" formControlName="password" class="form-control mb-2" required placeholder="Пароль">
+			<button type="submit" class="btn btn-dark w-100" [disabled]="loginForm.invalid">ВХОД</button>
+<!--			<a appNavigate [navigateURL]="'reg'" role="button" class="btn btn-secondary mt-2 w-100">Еще не создан аккаунт?</a>-->
+		</form>
+	</div>
+
+</div>

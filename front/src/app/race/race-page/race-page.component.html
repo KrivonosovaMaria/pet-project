@@ -1,0 +1,101 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-2" data-aos="fade-up">{{ race.name }}</h1>
+			<div class="row">
+				<div class="col-auto" data-aos="fade-up">
+					<a appNavigate [navigateURL]="'races'" role="button" class="link-light">
+						<p class="fs-4 m-0">Назад</p>
+					</a>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<p class="fs-4 m-0">/</p>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<a appNavigate [navigateURL]="'race_update'" [queryParams]="{id:race.id}" role="button"
+					   class="link-light">
+						<p class="fs-4 m-0">Обновить</p>
+					</a>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<p class="fs-4 m-0">/</p>
+				</div>
+				<div *ngIf="role === 'ADMIN'" class="col-auto" data-aos="fade-up">
+					<a (click)="delete()" role="button" class="link-light">
+						<p class="fs-4 m-0">Удалить</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<div *ngIf="role === 'USER' && race.free > 0" class="row d-flex justify-content-center mb-5" data-aos="fade-up">
+		<div class="col-3">
+			<input type="number" [(ngModel)]="count" class="form-control" min="1" step="" [max]="race.free"
+				   placeholder="Введите количество билетов">
+		</div>
+		<div class="col-auto">
+			<button type="button" class="btn btn-dark" [disabled]="count <= 0" (click)="ticket()">Купить</button>
+		</div>
+	</div>
+
+	<div class="row text-center mb-4" data-aos="fade-up">
+		<div class="col-12 mb-3">
+			<img [src]="race.img" alt="img" class="object-fit-cover w-100 rounded shadow border" height="300px">
+		</div>
+
+		<div *ngIf="daysLeft !== null" class="col-12 mb-3 fs-4">
+			<p *ngIf="daysLeft < 0" class="m-0">
+				Событие уже прошло {{ -daysLeft }} {{ getDayWord(-daysLeft) }} назад
+			</p>
+			<p *ngIf="daysLeft === 0" class="m-0">
+				Событие сегодня!
+			</p>
+			<p *ngIf="daysLeft > 0" class="m-0">
+				До события осталось {{ daysLeft }} {{ getDayWord(daysLeft) }}
+			</p>
+		</div>
+
+		<div class="col-12 col-lg-6 mb-3">
+			<a appNavigate [navigateURL]="'track'" [queryParams]="{id:race.trackId}" role="button" class="text-primary">
+				<p class="fs-4 m-0">{{ 'Гоночная трасса: ' + race.trackName }}</p>
+			</a>
+		</div>
+		<div class="col-12 col-lg-6 mb-3">
+			<p class="fs-4 m-0">{{ 'Дата: ' + race.date }}</p>
+		</div>
+		<div class="col-12 col-lg-3 mb-3">
+			<p class="fs-5 m-0">{{ 'Стоимость билета: ' + race.price }}</p>
+		</div>
+		<div class="col-12 col-lg-3 mb-3">
+			<p class="fs-5 m-0">{{ 'Всего билетов: ' + race.count }}</p>
+		</div>
+		<div class="col-12 col-lg-3 mb-3">
+			<p class="fs-5 m-0">{{ 'Осталось: ' + race.free + ' (~' + race.freePercent + '%)' }}</p>
+		</div>
+		<div class="col-12 col-lg-3 mb-3">
+			<p class="fs-5 m-0">{{ 'Продано: ' + race.busy + ' (~' + race.busyPercent + '%)' }}</p>
+		</div>
+		<div class="col-12 mb-3">
+			<p class="fs-4 m-0 text-start" align="justify">{{ 'Описание: ' + race.description }}</p>
+		</div>
+	</div>
+
+	<form *ngIf="role === 'USER'" [formGroup]="commentFormGroup" (ngSubmit)="comment()" class="mb-4" data-aos="fade-up">
+		<textarea formControlName="text" class="form-control mb-2" minlength="1" maxlength="5000"
+				  placeholder="Комментарий"></textarea>
+		<button type="submit" class="btn btn-primary w-100">Добавить</button>
+	</form>
+
+	@for (i of comments; track i.id) {
+		<div class="card card-body mb-3 fs-5" data-aos="fade-up">
+			<p class="m-0">{{ i.date }}</p>
+			<p class="m-0">{{ i.text }}</p>
+		</div>
+	}
+
+</div>

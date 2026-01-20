@@ -1,0 +1,34 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 *ngIf="role === 'ADMIN'" class="mb-5" data-aos="fade-up">БИЛЕТЫ</h1>
+			<h1 *ngIf="role === 'USER'" class="mb-5" data-aos="fade-up">ЛИЧНЫЙ КАБИНЕТ</h1>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<div class="row">
+		@for (i of tickets; track i.id) {
+			<div class="col-12 col-lg-4 mb-3" data-aos="fade-up">
+				<div class="card card-body">
+					<a appNavigate [navigateURL]="'race'" [queryParams]="{id:i.raceId}" role="button">
+						<img [src]="i.raceImg" alt="img" class="object-fit-cover w-100 rounded shadow border mb-3"
+							 style="height: 200px">
+					</a>
+					<p class="fs-5 m-0 text-center">{{ i.raceName }}</p>
+					<p class="fs-5 m-0">{{ 'Дата: ' + i.raceDate }}</p>
+					<p class="fs-5 m-0">{{ 'Количество билетов: ' + i.count }}</p>
+					<p class="fs-5 m-0">{{ 'Стоимость: ' + i.price }}</p>
+					<p class="fs-5 m-0">{{ 'Сумма: ' + i.sum }}</p>
+					<a appNavigate [navigateURL]="'track'" [queryParams]="{id:i.trackId}" role="button" class="text-primary">
+						<p class="fs-5 m-0">{{ 'Трасса: ' + i.trackName }}</p>
+					</a>
+				</div>
+			</div>
+		}
+	</div>
+
+</div>

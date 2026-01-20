@@ -1,0 +1,41 @@
+<div class="container-fluid py-5"
+	 style="background: url(/img/bg/bg.jpg) no-repeat fixed;background-size: cover;height: 500px">
+	<div class="container h-100 d-flex align-items-center">
+		<div class="text-white">
+			<h1 class="mb-2" data-aos="fade-up">Обновить</h1>
+			<div class="row">
+				<div class="col-auto" data-aos="fade-up">
+					<a appNavigate [navigateURL]="'track'" [queryParams]="{id:id}" role="button" class="link-light">
+						<p class="fs-4 m-0">Назад</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container mt-5">
+
+	<form [formGroup]="trackFormGroup" (ngSubmit)="update()" class="row">
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Наименование</p>
+			<input type="text" formControlName="name" class="form-control" minlength="1" maxlength="255">
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Длина круга, км</p>
+			<input type="number" formControlName="length" class="form-control" min="0.01" step="0.01" max="1000000">
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Фото</p>
+			<input type="file" (change)="changeImg($event)" class="form-control" accept="image/*">
+		</div>
+		<div class="col-12 col-lg-6 mb-3" data-aos="fade-up">
+			<p class="fs-5 m-0">Адрес</p>
+			<input type="text" formControlName="address" class="form-control" minlength="1" maxlength="255">
+		</div>
+		<div class="col-12" data-aos="fade-up">
+			<button type="submit" class="btn btn-dark w-100" [disabled]="!checkSubmit()">Обновить</button>
+		</div>
+	</form>
+
+</div>
